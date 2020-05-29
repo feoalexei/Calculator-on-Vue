@@ -41,17 +41,22 @@ export default {
             operatorClicked: false,
         }
     },
+    // filters: {
+    //     maxInput() {
+    //         if (this.current.length > 5)
+    //         console.log('Error')
+    //         return;
+    //     }
+    // },
     methods: {
         clear() {
             this.current = '';
         },
         switchSign() {
-            this.current = this.current.charAt(0) === '-' 
-                ? this.current.slice(1)
-                : `-${this.current}`;
-            if (this.current.charAt(0) === 0) {
-                return;
-            }
+            // this.current = this.current.charAt(0) === '-' 
+            //     ? this.current.slice(1)
+            //     : `-${this.current}`;
+            this.current *= -1;
         },
         percent() {
             this.current = `${parseFloat(this.current) / 100}`;
@@ -61,32 +66,36 @@ export default {
                 this.current = '';
                 this.operatorClicked = false;
             }
+            
             this.current = `${this.current}${number}`;
+            
+            
         },
         dot() {
             if (!this.current.includes('.')) {
                 this.input('.');
             } 
         },
-        setPrevius() {
+        setPrevious() {
+            this.current = parseFloat(this.current);
             this.previous = this.current;
             this.operatorClicked = true;
         },
         divide() {
             this.operator = (a, b) => a / b;
-            this.setPrevius();
+            this.setPrevious();
         },
         multiplicate() {
             this.operator = (a, b) => a * b;
-            this.setPrevius();
+            this.setPrevious();
         },
         substract() {
             this.operator = (a, b) => a - b;
-            this.setPrevius();
+            this.setPrevious();
         },
         add() {
             this.operator = (a, b) => a + b;
-            this.setPrevius();
+            this.setPrevious();
         },
         result() {
             this.current = `${this.operator(
@@ -94,9 +103,9 @@ export default {
                 parseFloat(this.current)
             )}`;
             this.previous = 0;
+            this.operatorClicked = true;
         }
     }
-
 }
 </script>
 
